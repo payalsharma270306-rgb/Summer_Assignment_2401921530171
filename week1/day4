@@ -1,0 +1,68 @@
+Q1.MATRIX DIAGONAL SUM:
+class Solution {
+    public int diagonalSum(int[][] mat) {
+        int n = mat.length;
+        int sum = 0;
+
+        for (int i = 0; i < n; i++) {
+            sum += mat[i][i];
+            sum += mat[i][n - 1 - i];
+        }
+        if (n % 2 == 1) {
+            sum -= mat[n / 2][n / 2];
+        }
+
+        return sum;
+    }
+}
+
+Q2.RESHAPE THE MATRIX:
+class Solution {
+    public int[][] matrixReshape(int[][] mat, int r, int c) {
+        int m = mat.length, n = mat[0].length;
+        if (m * n != r * c) return mat;
+
+        int[][] res = new int[r][c];
+
+        for (int i = 0; i < m * n; i++) {
+            res[i / c][i % c] = mat[i / n][i % n];
+        }
+
+        return res;
+    }
+}
+
+Q3.SPIRAL MATRIX:
+import java.util.*;
+
+class Solution {
+    public List<Integer> spiralOrder(int[][] m) {
+        List<Integer> res = new ArrayList<>();
+        int top = 0, bottom = m.length - 1;
+        int left = 0, right = m[0].length - 1;
+
+        while (top <= bottom && left <= right) {
+
+            for (int i = left; i <= right; i++)
+                res.add(m[top][i]);
+            top++;
+
+            for (int i = top; i <= bottom; i++)
+                res.add(m[i][right]);
+            right--;
+
+            if (top <= bottom)
+                for (int i = right; i >= left; i--)
+                    res.add(m[bottom][i]);
+            bottom--;
+
+            if (left <= right)
+                for (int i = bottom; i >= top; i--)
+                    res.add(m[i][left]);
+            left++;
+        }
+
+        return res;
+    }
+}
+
