@@ -1,0 +1,94 @@
+1.Longest Substring Without Repeating Characters:
+import java.util.*;
+
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        HashMap<Character, Integer> map = new HashMap<>();
+        int left = 0, maxLen = 0;
+
+        for (int right = 0; right < s.length(); right++) {
+            char ch = s.charAt(right);
+
+            if (map.containsKey(ch) && map.get(ch) >= left) {
+                left = map.get(ch) + 1;
+            }
+
+            map.put(ch, right);
+            maxLen = Math.max(maxLen, right - left + 1);
+        }
+
+        return maxLen;
+    }
+}
+
+
+2. Permutation in String :
+  import java.util.Arrays;
+
+class Solution {
+    public boolean checkInclusion(String s1, String s2) {
+        char[] arr1 = s1.toCharArray();
+        Arrays.sort(arr1);
+        String target = new String(arr1);
+
+        int n = s1.length();
+
+        for (int i = 0; i <= s2.length() - n; i++) {
+            char[] arr2 = s2.substring(i, i + n).toCharArray();
+            Arrays.sort(arr2);
+
+            if (target.equals(new String(arr2))) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+}
+
+3. Find All Anagrams in a String:
+  import java.util.*;
+
+class Solution {
+    public List<Integer> findAnagrams(String s, String p) {
+        List<Integer> ans = new ArrayList<>();
+
+        if (p.length() > s.length()) return ans;
+
+        HashMap<Character, Integer> map = new HashMap<>();
+
+        for (char c : p.toCharArray()) {
+            map.put(c, map.getOrDefault(c, 0) + 1);
+        }
+
+        int left = 0, right = 0, count = map.size();
+
+        while (right < s.length()) {
+            char ch = s.charAt(right);
+
+            if (map.containsKey(ch)) {
+                map.put(ch, map.get(ch) - 1);
+                if (map.get(ch) == 0) count--;
+            }
+
+            right++;
+
+            while (count == 0) {
+                if (right - left == p.length()) {
+                    ans.add(left);
+                }
+
+                char temp = s.charAt(left);
+
+                if (map.containsKey(temp)) {
+                    map.put(temp, map.get(temp) + 1);
+                    if (map.get(temp) > 0) count++;
+                }
+
+                left++;
+            }
+        }
+
+        return ans;
+    }
+}
