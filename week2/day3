@@ -1,0 +1,44 @@
+1. Implement strStr():
+class Solution {
+    public int strStr(String haystack, String needle) {
+        return haystack.indexOf(needle);
+    }
+}
+
+
+2. Is Subsequence:
+class Solution {
+    public boolean isSubsequence(String s, String t) {
+        int i = 0;
+        int j = 0;
+
+        while (i < s.length() && j < t.length()) {
+            if (s.charAt(i) == t.charAt(j)) {
+                i++;
+            }
+            j++;
+        }
+
+        if (i == s.length()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+
+
+3. Repeated Substring Pattern:
+class Solution {
+    public boolean repeatedSubstringPattern(String s) {
+        
+        String ans = s + s;
+        String new = doubled.substring(1, ans.length() - 1);
+
+        if (new.contains(s)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
