@@ -1,0 +1,78 @@
+1. Reverse Words in a String III:
+  class Solution {
+    public String reverseWords(String s) {
+        String[] words = s.split(" ");
+        StringBuilder ans = new StringBuilder();
+
+        for (int i = 0; i < words.length; i++) {
+            StringBuilder sb = new StringBuilder(words[i]);
+            ans.append(sb.reverse());
+
+            if (i != words.length - 1) {
+                ans.append(" ");
+            }
+        }
+
+        return ans.toString();
+    }
+}
+
+2. Decode String:
+  class Solution {
+    int i = 0;
+
+    public String decodeString(String s) {
+        return dfs(s);
+    }
+
+    private String dfs(String s) {
+        StringBuilder sb = new StringBuilder();
+        int num = 0;
+
+        while (i < s.length()) {
+            char c = s.charAt(i);
+
+            if (Character.isDigit(c)) {
+                num = num * 10 + (c - '0');
+            }
+            else if (c == '[') {
+                i++;
+                String temp = dfs(s);
+                while (num-- > 0) sb.append(temp);
+                num = 0;
+            }
+            else if (c == ']') {
+                return sb.toString();
+            }
+            else {
+                sb.append(c);
+            }
+
+            i++;
+        }
+
+        return sb.toString();
+    }
+}
+
+3. Generate Parentheses:
+class Solution {
+    public List<String> generateParenthesis(int n) {
+        List<String> res = new ArrayList<>();
+        backtrack(res, "", 0, 0, n);
+        return res;
+    }
+
+    void backtrack(List<String> res, String s, int open, int close, int n) {
+        if (s.length() == 2 * n) {
+            res.add(s);
+            return;
+        }
+
+        if (open < n)
+            backtrack(res, s + "(", open + 1, close, n);
+
+        if (close < open)
+            backtrack(res, s + ")", open, close + 1, n);
+    }
+}
