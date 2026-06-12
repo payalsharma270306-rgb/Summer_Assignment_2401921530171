@@ -1,0 +1,95 @@
+1. Group Anagrams:
+import java.util.*;
+
+class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+
+        HashMap<String, List<String>> map = new HashMap<>();
+
+        for(String s : strs){
+
+            char[] arr = s.toCharArray();
+            Arrays.sort(arr);
+
+            String key = new String(arr);
+
+            if(!map.containsKey(key)){
+                map.put(key, new ArrayList<>());
+            }
+
+            map.get(key).add(s);
+        }
+
+        return new ArrayList<>(map.values());
+    }
+}
+
+
+2. String Compression:
+class Solution {
+    public int compress(char[] chars) {
+
+        int index = 0;
+        int i = 0;
+
+        while(i < chars.length){
+
+            char current = chars[i];
+            int count = 0;
+
+            while(i < chars.length && chars[i] == current){
+                count++;
+                i++;
+            }
+
+            chars[index++] = current;
+
+            if(count > 1){
+                String s = String.valueOf(count);
+
+                for(char c : s.toCharArray()){
+                    chars[index++] = c;
+                }
+            }
+        }
+
+        return index;
+    }
+}
+
+
+3. Longest Palindromic Substring:
+class Solution {
+
+    int start = 0;
+    int maxLen = 0;
+
+    public String longestPalindrome(String s) {
+
+        for(int i = 0; i < s.length(); i++){
+
+            expand(s, i, i);       // odd length palindrome
+            expand(s, i, i + 1);   // even length palindrome
+        }
+
+        return s.substring(start, start + maxLen);
+    }
+
+    void expand(String s, int l, int r){
+
+        while(l >= 0 && r < s.length() && s.charAt(l) == s.charAt(r)){
+            l--;
+            r++;
+        }
+
+        int len = r - l - 1;
+
+        if(len > maxLen){
+            maxLen = len;
+            start = l + 1;
+        }
+    }
+}
+
+
+
