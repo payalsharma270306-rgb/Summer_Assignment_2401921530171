@@ -1,0 +1,147 @@
+1. Valid Parentheses:
+import java.util.Stack;
+
+class Solution {
+    public boolean isValid(String s) {
+
+        Stack<Character> st = new Stack<>();
+
+        for(int i = 0; i < s.length(); i++) {
+
+            char ch = s.charAt(i);
+
+            if(ch == '(' || ch == '[' || ch == '{') {
+                st.push(ch);
+            }
+
+            else {
+
+                if(st.isEmpty()) {
+                    return false;
+                }
+
+                char top = st.pop();
+
+                if(ch == ')' && top != '(') {
+                    return false;
+                }
+
+                if(ch == ']' && top != '[') {
+                    return false;
+                }
+
+                if(ch == '}' && top != '{') {
+                    return false;
+                }
+            }
+        }
+
+        return st.isEmpty();
+    }
+}
+
+
+2. Min Stack:
+import java.util.Stack;
+
+class MinStack {
+
+    Stack<Integer> st;
+    Stack<Integer> min;
+
+
+    public MinStack() {
+
+        st = new Stack<>();
+        min = new Stack<>();
+
+    }
+
+
+    public void push(int val) {
+
+        st.push(val);
+
+
+        if(min.isEmpty() || val <= min.peek()) {
+            min.push(val);
+        }
+
+    }
+
+
+    public void pop() {
+
+        if(st.peek().equals(min.peek())) {
+            min.pop();
+        }
+
+        st.pop();
+
+    }
+
+
+    public int top() {
+
+        return st.peek();
+
+    }
+
+
+    public int getMin() {
+
+        return min.peek();
+
+    }
+}
+
+3. Next Greater Element I:
+import java.util.*;
+
+class Solution {
+
+    public int[] nextGreaterElement(int[] nums1, int[] nums2) {
+
+
+        HashMap<Integer,Integer> map = new HashMap<>();
+
+        Stack<Integer> st = new Stack<>();
+
+
+        for(int i = nums2.length-1; i >= 0; i--) {
+
+
+            while(!st.isEmpty() && st.peek() <= nums2[i]) {
+                st.pop();
+            }
+
+
+            if(st.isEmpty()) {
+                map.put(nums2[i], -1);
+            }
+
+            else {
+                map.put(nums2[i], st.peek());
+            }
+
+
+            st.push(nums2[i]);
+
+        }
+
+
+
+        int ans[] = new int[nums1.length];
+
+
+        for(int i=0; i<nums1.length; i++) {
+
+            ans[i] = map.get(nums1[i]);
+
+        }
+
+
+        return ans;
+
+    }
+}
