@@ -1,0 +1,128 @@
+1. Implement Queue using Stacks:
+import java.util.Stack;
+
+class MyQueue {
+    Stack<Integer> s1 = new Stack<>();
+    Stack<Integer> s2 = new Stack<>();
+
+    // Enqueue operation
+    public void enqueue(int x) {
+        s1.push(x);
+    }
+
+    // Dequeue operation
+    public int dequeue() {
+        if (isEmpty()) {
+            System.out.println("Queue is Empty");
+            return -1;
+        }
+
+        if (s2.isEmpty()) {
+            while (!s1.isEmpty()) {
+                s2.push(s1.pop());
+            }
+        }
+
+        return s2.pop();
+    }
+
+    // Front element
+    public int peek() {
+        if (isEmpty()) {
+            System.out.println("Queue is Empty");
+            return -1;
+        }
+
+        if (s2.isEmpty()) {
+            while (!s1.isEmpty()) {
+                s2.push(s1.pop());
+            }
+        }
+
+        return s2.peek();
+    }
+
+    // Check if queue is empty
+    public boolean isEmpty() {
+        return s1.isEmpty() && s2.isEmpty();
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        MyQueue q = new MyQueue();
+
+        q.enqueue(10);
+        q.enqueue(20);
+        q.enqueue(30);
+
+        System.out.println("Front Element: " + q.peek());
+
+        System.out.println("Dequeued: " + q.dequeue());
+        System.out.println("Dequeued: " + q.dequeue());
+
+        q.enqueue(40);
+
+        System.out.println("Dequeued: " + q.dequeue());
+        System.out.println("Dequeued: " + q.dequeue());
+    }
+}
+
+
+2. Number of Recent Calls:
+import java.util.*;
+
+class RecentCounter {
+
+    Queue<Integer> queue;
+
+    public RecentCounter() {
+        queue = new LinkedList<>();
+    }
+
+    public int ping(int t) {
+        queue.offer(t);
+
+        while (queue.peek() < t - 3000) {
+            queue.poll();
+        }
+
+        return queue.size();
+    }
+}
+
+3. Sliding Window Maximum:
+import java.util.*;
+
+class Solution {
+    public int[] maxSlidingWindow(int[] nums, int k) {
+
+        int n = nums.length;
+        int[] result = new int[n - k + 1];
+
+        Deque<Integer> dq = new LinkedList<>();
+        int idx = 0;
+
+        for (int i = 0; i < n; i++) {
+
+            // Remove elements outside the window
+            while (!dq.isEmpty() && dq.peekFirst() <= i - k) {
+                dq.pollFirst();
+            }
+
+            // Remove smaller elements
+            while (!dq.isEmpty() && nums[dq.peekLast()] < nums[i]) {
+                dq.pollLast();
+            }
+
+            dq.offerLast(i);
+
+            // Window formed
+            if (i >= k - 1) {
+                result[idx++] = nums[dq.peekFirst()];
+            }
+        }
+
+        return result;
+    }
+}
