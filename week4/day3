@@ -1,0 +1,66 @@
+1. Search in a Binary Search Tree:
+class Solution {
+    public TreeNode searchBST(TreeNode root, int val) {
+
+        while (root != null) {
+
+            if (root.val == val) {
+                return root;
+            }
+
+            if (val < root.val) {
+                root = root.left;
+            } else {
+                root = root.right;
+            }
+        }
+
+        return null;
+    }
+}
+
+2. Validate Binary Search Tree:
+class Solution {
+
+    public boolean isValidBST(TreeNode root) {
+        return validate(root, Long.MIN_VALUE, Long.MAX_VALUE);
+    }
+
+    private boolean validate(TreeNode node, long min, long max) {
+
+        if (node == null) {
+            return true;
+        }
+
+        if (node.val <= min || node.val >= max) {
+            return false;
+        }
+
+        return validate(node.left, min, node.val) &&
+               validate(node.right, node.val, max);
+    }
+}
+
+
+3. Lowest Common Ancestor of a BST:
+class Solution {
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+
+        while (root != null) {
+
+            if (p.val < root.val && q.val < root.val) {
+                root = root.left;
+            }
+
+            else if (p.val > root.val && q.val > root.val) {
+                root = root.right;
+            }
+
+            else {
+                return root;
+            }
+        }
+
+        return null;
+    }
+}
