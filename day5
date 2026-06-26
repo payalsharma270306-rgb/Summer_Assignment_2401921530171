@@ -1,0 +1,140 @@
+1. Symmetric Tree:
+class Solution {
+    public boolean isSymmetric(TreeNode root) {
+        if(root == null) return true;
+
+        return check(root.left, root.right);
+    }
+
+    public boolean check(TreeNode left, TreeNode right){
+
+        // both empty
+        if(left == null && right == null)
+            return true;
+
+        // one empty
+        if(left == null || right == null)
+            return false;
+
+        // values should match
+        if(left.val != right.val)
+            return false;
+
+        // mirror condition
+        return check(left.left, right.right) &&
+               check(left.right, right.left);
+    }
+}
+
+
+2. Construct Binary Tree from Preorder and Inorder Traversal
+class Solution {
+
+    int preIndex = 0;
+
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+
+        return build(preorder, inorder, 0, inorder.length - 1);
+    }
+
+
+    public TreeNode build(int[] preorder, int[] inorder, int start, int end) {
+
+        if(start > end)
+            return null;
+
+
+        // root value from preorder
+        int rootValue = preorder[preIndex++];
+
+        TreeNode root = new TreeNode(rootValue);
+
+
+        // find root in inorder
+        int index = start;
+
+        while(inorder[index] != rootValue){
+            index++;
+        }
+
+
+        // build left subtree
+        root.left = build(preorder, inorder, start, index - 1);
+
+
+        // build right subtree
+        root.right = build(preorder, inorder, index + 1, end);
+
+
+        return root;
+    }
+}
+
+3. Serialize and Deserialize Binary Tree:
+class Codec {
+
+    // Serialize
+    public String serialize(TreeNode root) {
+
+        StringBuilder sb = new StringBuilder();
+
+        helper(root, sb);
+
+        return sb.toString();
+    }
+
+
+    public void helper(TreeNode root, StringBuilder sb){
+
+        if(root == null){
+            sb.append("null,");
+            return;
+        }
+
+
+        sb.append(root.val).append(",");
+
+
+        helper(root.left, sb);
+
+        helper(root.right, sb);
+    }
+
+
+
+    // Deserialize
+
+    int index = 0;
+
+    public TreeNode deserialize(String data) {
+
+        String[] arr = data.split(",");
+
+        return build(arr);
+
+    }
+
+
+    public TreeNode build(String[] arr){
+
+        if(arr[index].equals("null")){
+            index++;
+            return null;
+        }
+
+
+        TreeNode root = new TreeNode(
+            Integer.parseInt(arr[index])
+        );
+
+        index++;
+
+
+        root.left = build(arr);
+
+        root.right = build(arr);
+
+
+        return root;
+    }
+}
