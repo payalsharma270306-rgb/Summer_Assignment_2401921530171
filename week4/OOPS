@@ -1,0 +1,155 @@
+1. Interface Implementation:
+
+interface Test {
+    int square(int num);
+}
+
+// Implementing the interface in Arithmetic class
+class Arithmetic implements Test {
+    @Override
+    public int square(int num) {
+        return num * num;
+    }
+}
+
+// Main class to test the implementation
+public class ToTestInt {
+    public static void main(String[] args) {
+        // Creating an object of Arithmetic class
+        Arithmetic obj = new Arithmetic();
+        
+        int number = 5;
+        int result = obj.square(number);
+        
+        System.out.println("The square of " + number + " is: " + result);
+    }
+}
+
+2. Outer and Inner Classes:
+class Outer {
+    // Outer class method
+    void display() {
+        System.out.println("Display method inside Outer class.");
+    }
+
+    // Inner class definition
+    class Inner {
+        // Inner class method
+        void display() {
+            System.out.println("Display method inside Inner class.");
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // 1. Call the outer class method
+        Outer outerObj = new Outer();
+        outerObj.display();
+
+        // 2. Call the inner class method (requires an instance of the Outer class)
+        Outer.Inner innerObj = outerObj.new Inner();
+        innerObj.display();
+    }
+}
+
+3. Encapsulation with Point Class:
+class Point {
+    // Private instance variables (Encapsulation)
+    private int x;
+    private int y;
+
+    // No-argument constructor
+    public Point() {
+        this.x = 0;
+        this.y = 0;
+    }
+
+    // Parameterized constructor
+    public Point(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    // Setter for X
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    // Setter for Y
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    // Setter for both X and Y
+    public void setXY(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    // Helper method to display the point coordinates
+    public void displayPoint() {
+        System.out.println("Point coordinates: (" + x + ", " + y + ")");
+    }
+}
+
+public class TestPoint {
+    public static void main(String[] args) {
+        Point p1 = new Point(); // Uses default constructor
+        p1.displayPoint();
+
+        Point p2 = new Point(10, 20); // Uses parameterized constructor
+        p2.displayPoint();
+
+        p2.setXY(50, 60); // Updating values
+        p2.displayPoint();
+    }
+}
+
+4. Inheritance (Box and Box3d):
+// Base class
+class Box {
+    double length;
+    double breadth;
+
+    // Constructor for Box
+    public Box(double length, double breadth) {
+        this.length = length;
+        this.breadth = breadth;
+    }
+
+    // Method to calculate Area
+    public double getArea() {
+        return length * breadth;
+    }
+}
+
+// Subclass extending Box
+class Box3d extends Box {
+    double height;
+
+    // Constructor for Box3d
+    public Box3d(double length, double breadth, double height) {
+        // Call the parent class constructor
+        super(length, breadth); 
+        this.height = height;
+    }
+
+    // Method to calculate Volume
+    public double getVolume() {
+        // Volume = length * breadth * height (or getArea() * height)
+        return getArea() * height;
+    }
+}
+
+public class TestInheritance {
+    public static void main(String[] args) {
+        // Creating a 3D Box object
+        Box3d myBox = new Box3d(5.0, 4.0, 3.0);
+
+        System.out.println("Base Area of the box: " + myBox.getArea());
+        System.out.println("Total Volume of the box: " + myBox.getVolume());
+    }
+}
+
+
